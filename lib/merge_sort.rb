@@ -4,7 +4,7 @@ class MergeSort
   end
   
   def sort
-    return sorted_list(@list)
+    return sorted(@list)
   end
   
   def merge(first_list, second_list)
@@ -25,11 +25,9 @@ class MergeSort
   
   private
   
-  def sorted_list(list)
+  def sorted(list)
     return list if list.size <=1
-    sorted_left = sorted_list(first_half_of(list))
-    sorted_right = sorted_list(second_half_of(list))
-    return merge(sorted_left, sorted_right)
+    return merge(sorted(first_half_of(list)), sorted(second_half_of(list)))
   end
   
   def first_half_of(list)
