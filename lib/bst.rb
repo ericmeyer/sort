@@ -22,9 +22,9 @@ class BSTNode
       handle_delete_for_right_child
     elsif left_value == value
       handle_delete_for_left_child
-    elsif @right && value > @value
+    elsif @right && value > self.value
       @right.delete(value)
-    elsif @left && value < @value
+    elsif @left && value < self.value
       @left.delete(value)
     end
   end
