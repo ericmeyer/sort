@@ -1,4 +1,5 @@
-require File.expand_path(File.dirname(__FILE__) + '/../lib/bubble_sort')
+require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
+require "bubble_sort"
 
 describe BubbleSort do
   it "returns a sorted list" do

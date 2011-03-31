@@ -1,4 +1,5 @@
-require File.expand_path(File.dirname(__FILE__) + '/../lib/merge_sort')
+require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
+require "merge_sort"
 
 describe MergeSort do
   it "returns an already sorted list" do
