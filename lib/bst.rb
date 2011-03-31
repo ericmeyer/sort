@@ -1,10 +1,6 @@
 class BSTNode
   attr_accessor :value, :right, :left, :parent
   
-  # def initialize(parent)
-  #   @parent = parent
-  # end
-  
   def insert(value)
     if self.value.nil?
       self.value = value
@@ -17,15 +13,11 @@ class BSTNode
     end
   end
   
-  def delete(value)
-    if right_value == value
-      handle_delete_for_right_child
-    elsif left_value == value
-      handle_delete_for_left_child
-    elsif @right && value > self.value
-      @right.delete(value)
-    elsif @left && value < self.value
-      @left.delete(value)
+  def delete(value_to_delete)
+    if value_to_delete >= self.value
+      handle_delete_for_right_child(value_to_delete)
+    else
+      handle_delete_for_left_child(value_to_delete)
     end
   end
 
@@ -38,6 +30,14 @@ class BSTNode
     [@left, @right].compact
   end
     
+  def in_order_successor_value
+    temp = self.right
+    while temp.left
+      temp = temp.left
+    end
+    return temp.value
+  end
+  
   private #########################
   
   def right_value
@@ -48,37 +48,37 @@ class BSTNode
     @left.value if @left
   end
   
-  def handle_delete_for_right_child
-    case @right.children.size
-    when 0
-      @right = nil
-    when 1
-      @right = @right.children.first
-    when 2
-      node_to_move = @right.right
-      while node_to_move.left
-        node_to_move = node_to_move.left
+  def handle_delete_for_right_child(value_to_delete)
+    if right_value == value_to_delete
+      case @right.children.size
+      when 0
+        @right = nil
+      when 1
+        @right = @right.children.first
+      when 2
+        temp = @right.in_order_successor_value
+        self.delete(temp)
+        @right.value = temp
       end
-      temp = node_to_move.value
-      self.delete(node_to_move.value)
-      @right.value = temp
+    else
+      @right.delete(value_to_delete)
     end
   end
   
-  def handle_delete_for_left_child
-    case @left.children.size
-    when 0
-      @left = nil
-    when 1
-      @left = @left.children.first
-    when 2
-      node_to_move = @left.right
-      while node_to_move.left
-        node_to_move = node_to_move.left
+  def handle_delete_for_left_child(value_to_delete)
+    if left_value == value_to_delete
+      case @left.children.size
+      when 0
+        @left = nil
+      when 1
+        @left = @left.children.first
+      when 2
+        temp = @left.in_order_successor_value
+        self.delete(temp)
+        @left.value = temp
       end
-      temp = node_to_move.value
-      self.delete(node_to_move.value)
-      @left.value = temp
+    else
+      @left.delete(value_to_delete)
     end
   end
 end
@@ -104,12 +104,8 @@ class BST
       when 1
         @root = @root.children.first
       when 2
-        node_to_move = @root.right
-        while node_to_move.left
-          node_to_move = node_to_move.left
-        end
-        temp = node_to_move.value
-        @root.delete(node_to_move.value)
+        temp = @root.in_order_successor_value
+        @root.delete(temp)
         @root.value = temp
       end
     else
