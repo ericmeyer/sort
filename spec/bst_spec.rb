@@ -90,21 +90,43 @@ describe BST do
     context "root node" do
       it "deletes if root is only node" do
         @bst.insert(3)
+
         @bst.delete(3)
-      
         @bst.root.should be_nil
       end
       
       it "handles when only the left child is present" do
-        pending
+        @bst.insert(3)
+        @bst.insert(2)
+        @bst.insert(1)
+        
+        @bst.delete(3)
+        @bst.root.value.should == 2
+        @bst.root.left.value.should == 1
+        @bst.root.left.left.should be_nil
       end
       
       it "handles when only the right child is present" do
-        pending
+        @bst.insert(3)
+        @bst.insert(4)
+        @bst.insert(5)
+        
+        @bst.delete(3)
+        @bst.root.value.should == 4
+        @bst.root.right.value.should == 5
+        @bst.root.right.right.should be_nil
       end
 
       it "handles when both children are present" do
-        pending
+        @bst.insert(3)
+        @bst.insert(2)
+        @bst.insert(5)
+        @bst.insert(4)
+        
+        @bst.delete(3)
+        @bst.root.value.should == 4
+        @bst.root.right.value.should == 5
+        @bst.root.left.value.should == 2
       end
     end
     
