@@ -1,5 +1,5 @@
 class BSTNode
-  attr_accessor :value, :right, :left, :parent
+  attr_accessor :value, :right, :left
   
   def insert(value)
     if self.value.nil?
